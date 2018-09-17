@@ -28,7 +28,7 @@ for i in range(1,5):
     interf.component_id = "eth1"
     
     #setting a certain IP address to the current node
-    interf.addAddress(pg.IPv4Address("192.168.1" + str(i), "255.255.255.0"))
+    interf.addAddress(pg.IPv4Address("192.168.1." + str(i), "255.255.255.0"))
     
     link.addInterface(interf)
     

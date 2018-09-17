@@ -17,16 +17,20 @@ pc = portal.Context()
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
 
+#send HTTP/1.1 request
 link = request.LAN("lan")
  
 #Creating nodes using a for loop starting at 1 (as the node name should start with node-1 and the starting ip address ends with .1)
 for i in range(1,5):
     node = request.XenVM(str("node-") + str(i))
     node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD"
-    inter = node.addInterface("if" + str(i))
-    inter.component_id = "eth1"
-    inter.addAddress(pg.IPv4Address("192.168.1" + str(i), "255.255.255.0"))
-    link.addInterface(inter)
+    interf = node.addInterface("if" + str(i))
+    interf.component_id = "eth1"
+    
+    #setting a certain IP address to the current node
+    interf.addAddress(pg.IPv4Address("192.168.1" + str(i), "255.255.255.0"))
+    
+    link.addInterface(interf)
     
     if(i == 1):
         node.routable_control_ip = "true"
